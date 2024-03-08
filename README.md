@@ -5,7 +5,7 @@ What can be used with Django:
 
 Write your own validators for the created models.
 1. pymongo - Not supported.
-2. MongoEngine - Not supported.
+2. MongoEngine - Not supported. "Coming Soon..."
 3. Djongo - Not supported. You will need to use a paid subscription. Many bugs are open 329 bugs on github.
 
 

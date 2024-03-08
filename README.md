@@ -14,6 +14,8 @@ Docker parameters:
 - Memory limit: 2 GB
 - Swap: 1 GB
 
+
+
 Python library for using MongoDB:
 ```
 pip install pymongo
@@ -56,6 +58,12 @@ python3 mongodb/test_query.py
 
 
 2. Test case 2 | Total documents: 77_921_678
+
+    - DB parameters:
+        * Sorage size: 2.64 GB (Uncompressed data size: 10.21 GB)
+        * Avg.document size: 131.0 B
+        * Indexes: 2
+        * Total index size: 1.07 GB
 
     - Function 'create_test_data' takes more than 2h (Python + used 5 different function calls for 1 document. "Bad decision")
 

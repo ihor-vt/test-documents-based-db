@@ -64,6 +64,7 @@ python3 mongodb/test_query.py
         * Avg.document size: 131.0 B
         * Indexes: 2
         * Total index size: 1.07 GB
+        * JSON backup = 24.8 GB
 
     - Function 'create_test_data' takes more than 2h (Python + used 5 different function calls for 1 document. "Bad decision")
 

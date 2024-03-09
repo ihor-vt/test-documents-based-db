@@ -135,6 +135,9 @@ def create_test_data_mysql():
 
 
 if __name__ == "__main__":
+    # If you have a powerful computer, you can start the simultaneous
+    # filling of databases using different terminals. Commenting is not necessary bd
+
     # Python libraries:
     #   pip install pymongo
     #   pip install mysql-connector-python
@@ -144,4 +147,4 @@ if __name__ == "__main__":
     create_test_data_mysql()
 
     # 2 Mongo DB
-    # create_test_data_mongodb()
+    create_test_data_mongodb()

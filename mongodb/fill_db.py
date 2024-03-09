@@ -1,5 +1,4 @@
 import time
-import random
 import functools
 import datetime
 
@@ -17,29 +16,6 @@ def timer(func):
         return result
     return wrapper
 
-@timer
-def create_test_data(collection):
-    start_date = datetime.datetime(2022, 1, 1)
-    end_date = datetime.datetime(2022, 12, 31)
-
-    delta = end_date - start_date
-    for i in range(delta.days + 1):
-        current_date = start_date + datetime.timedelta(days=i)
-        for device_item_id in range(1, 11):
-            for _ in range(17_280):
-                doc = {
-                    "device_id": 1,
-                    "device_item_id": device_item_id,
-                    "created_at": datetime.datetime.now(),
-                    "undated_at": datetime.datetime.now(),
-                    "timestamp": current_date + datetime.timedelta(seconds=random.randint(0, 86399)),
-                    "value": random.random() * 100.0
-                }
-                collection.insert_one(doc)
-
-@timer
-def count_created_documents(collection):
-    return collection.count_documents({})
 
 @timer
 def create_test_data_mongodb():
@@ -80,35 +56,38 @@ def create_test_data_mongodb():
 
     client.close()
 
-def create_table():
+@timer
+def create_db_with_table():
     mydb = mysql.connector.connect(
         host="localhost",
         user="username",
-        password="password",
-        database="test_db"
+        password="password"
     )
+
     cursor = mydb.cursor()
 
-    sql = """CREATE TABLE IF NOT EXISTS machine_log (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                partij_id VARCHAR(255),
-                partij_omschrijving TEXT,
-                herkomst VARCHAR(255),
-                maat VARCHAR(255),
-                container VARCHAR(255),
-                inhaaldatum DATETIME,
-                locatie VARCHAR(255),
-                timestamp DATETIME,
-                value INT
-            )"""
+    cursor.execute("CREATE DATABASE IF NOT EXISTS test_db")
+    cursor.execute("USE test_db")
 
-    cursor.execute(sql)
+    cursor.execute("""CREATE TABLE IF NOT EXISTS machine_log (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        partij_id VARCHAR(255),
+                        partij_omschrijving TEXT,
+                        herkomst VARCHAR(255),
+                        maat VARCHAR(255),
+                        container VARCHAR(255),
+                        inhaaldatum DATETIME,
+                        locatie VARCHAR(255),
+                        timestamp DATETIME,
+                        value INT
+                    )""")
 
     mydb.commit()
 
     cursor.close()
     mydb.close()
 
+@timer
 def create_test_data_mysql():
     mydb = mysql.connector.connect(
         host="localhost",
@@ -154,8 +133,15 @@ def create_test_data_mysql():
     cursor.close()
     mydb.close()
 
+
 if __name__ == "__main__":
-    create_table()
+    # Python libraries:
+    #   pip install pymongo
+    #   pip install mysql-connector-python
+
+    # 1 Mysql
+    create_db_with_table()
     create_test_data_mysql()
 
+    # 2 Mongo DB
     # create_test_data_mongodb()
